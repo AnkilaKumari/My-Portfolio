@@ -1,406 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to my Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  
-  <style>
-    /* Home hero: full viewport with centered typewriter */
-    #home {
-      position: relative;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.7);
-      padding: 0; /* hero fills viewport */
-    }
-    /* Home background image: full width only for #home */
-    #home .home-bg {
-      position: absolute;
-      left: 10;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: url('images/IMG_5506.jpg') no-repeat center center / cover;
-      z-index: -1; /* behind the inner content which has z-index:1 */
-      pointer-events: none;
-      filter: brightness(0.6);
-    }
-  #home .inner { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 2rem; }
-  /* Hero content */
-  .hero { text-align: center; color: #fff; }
-  .hero h1 { font-size: 2rem; margin-bottom: 1rem; }
-  .typewriter { font-weight: 600, cursor: pointer, display: inline-block, border-right: 2px solid rgba(255,255,255,0.75), padding-right: 6px; }
-  .hero .subtitle { margin-top: 1rem; font-weight: 400; opacity: 0.9; }
-    /* subtitle pop-in animation */
-    .hero .subtitle {
-      opacity: 0;
-      transform: scale(0.95);
-      transition: transform 300ms ease, opacity 300ms ease;
-    }
-    .hero .subtitle.pop {
-      opacity: 1;
-      transform: scale(1);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ankila Kumari • GIS Portfolio</title>
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      display: flex;
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #f7f4ee;
+    --text: #1a1a1a;
+    --muted: #666;
+    --accent: #6b46c1;
+    --card-bg: #ffffff;
+    --shadow: 0 8px 20px rgba(0,0,0,0.08);
+    --radius: 14px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Inter, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    scroll-behavior: smooth;
+  }
+
+  /* ================= HEADER ================= */
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 14px 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+  }
+
+  .nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 20px;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  nav ul {
+    display: flex;
+    list-style: none;
+    gap: 28px;
+    font-weight: 600;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+  }
+
+  nav a:hover {
+    color: var(--accent);
+  }
+
+  /* ================= HERO ================= */
+  #home {
+    width: 100%;
+    height: 100vh;
+    background: url("/Users/anbh/Desktop/My-Portfolio/node_modules/src/IMG_5084.jpg")
+                center center / cover no-repeat;
+    position: relative;
+  }
+
+  #home::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;      /* stack title and subtitle */
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    white-space: normal;         /* allow wrapping */
+  }
+
+  .hero-name {
+    font-size: 55px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .hero-tag {
+    font-size: 24px;
+    color: #ffffff;
+    opacity: 0.9;
+    margin-top: 0;
+  }
+
+  @media (max-width: 700px) {
+    .hero-content {
+      bottom: 30%;
     }
-    /* Sidebar  for name only*/
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 220px;
-      background: #111;
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 2rem;
-    }
-    .sidebar h1 {
-      font-size: 1.05rem;
-      margin: 0.5rem 0 0.25rem 0;
-      text-align: center;
-      line-height: 1.1;
-    }
-    .sidebar .subtitle {
-      font-size: 0.75rem;
-      color: #ddd;
-      margin-bottom: 1rem;
-      text-align: center;
-      max-width: 90%;
-    }
-    .sidebar .avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.12);
-      margin-bottom: 0.5rem;
-    }
-    .sidebar nav a {
-      color: #fff;
-      text-decoration: none;
-      display: block;
-      margin: 1rem 0;
-      font-weight: 500;
-    }
-    .sidebar nav a:hover {
-      color: #f39c12;
-    }
-    /* Main content */
-    .content {
-      margin-left: 220px;
-      width: calc(100% - 220px);
-      scroll-behavior: smooth;
-    }
-    section {
-      /* no forced full viewport; smaller vertical padding */
-      padding: 0.8rem 2rem;
-      max-width: 1000px;
-      margin: auto;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 0.4rem; /* smaller margin between sections */
-      font-size: 1.75rem;
-      color: #111;
-    }
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    .card {
-      background: #fff;
-      border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
-    .card:hover {
-      transform: scale(1.03);
-    }
-    footer {
-      background: #111;
-      color: #fff;
-      text-align: center;
-      padding: 1.5rem;
-    }
-    /* --- Scroll / sidebar highlight styles --- */
-    .sidebar {
-      transition: background 300ms ease, color 300ms ease;
-    }
-    .sidebar nav a {
-      transition: color 200ms ease, background 200ms ease, transform 150ms ease;
-      padding: 0.35rem 0.5rem;
-      border-radius: 40px;
-    }
-    .sidebar nav a.active {  /*something to chnage here*/
-      background: rgba(0,0,0,0.18); /* slightly lighter */
-      color: #fff;
-      font-weight: 600;
-      padding: 0.27rem 0.5rem; /* keep same as normal links */
-      border-radius: 16px;      /* less rounded */
-      /* Remove or reduce transform if not needed */
-      transform: none;
-    }
-    @media (max-width: 800px) {
-      .sidebar { position: relative; width: 100%; height: auto; display: flex; padding: 1rem; }
-      .content { margin-left: 0; width: 100%; }
-    }
-  </style>
+  }
+
+  /* ================= GENERIC SECTIONS ================= */
+  section {
+    padding: 80px 20px;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h2.section-title {
+    font-size: 32px;
+    margin-bottom: 18px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    color: var(--muted);
+  }
+
+  /* ================= ABOUT ================= */
+  #about {
+    background: #1f1f1f;  /* greyish black full width */
+    color: #ffffff;
+  }
+
+  #about p {
+    color: #dcdcdc;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 30px;
+  }
+
+  .about-photo {
+    width: 100%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .skills-list span {
+    background: #333;
+    color: #f5f5f5;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  /* ================= PROJECTS ================= */
+  #work {
+    background: var(--bg);
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    padding: 16px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 280px;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .project-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+  }
+
+  .project-card h4 {
+    font-size: 18px;
+    margin: 6px 0 4px;
+  }
+
+  .project-card p.small {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ================= CAREER SECTION ================= */
+  #career {
+    background: #1f1f1f;  /*  blackish greyish, full width */
+    color: #ffffff;
+    padding: 60px 20px;   /* smaller padding to avoid huge gaps */
+  }
+
+  .career-section {
+    text-align: center;
+  }
+
+  .career-section .section-title {
+    color: #ffffff;
+    margin-bottom: 16px;
+  }
+
+  .career-section p {
+    color: #dcdcdc;
+    max-width: 800px;
+    margin: 0 auto 16px auto;
+  }
+
+  .career-section p strong {
+    display: block;
+    color: #ffffff;
+    margin-top: 10px;
+    margin-bottom: 6px;
+  }
+
+  /* ================= CONNECT WITH ME SECTION ================= */
+  .contact-section {
+    padding: 100px 20px;
+    position: relative;
+    background: url("/Users/anbh/Desktop/My-Portfolio/node_modules/src/IMG_0831.JPG")
+                center/cover no-repeat;
+    color: #fff;
+  }
+
+  .contact-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+  }
+
+  .contact-inner {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-title {
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+
+  .contact-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .contact-card {
+    background: rgba(255,255,255,0.95);
+    color: #1a1a1a;
+    padding: 32px 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    min-width: 260px;
+    max-width: 320px;
+    text-align: center;
+  }
+
+  .contact-icon {
+    font-size: 26px;
+    margin-bottom: 12px;
+  }
+
+  .contact-heading {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .contact-link a {
+    text-decoration: none;
+    font-size: 15px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .contact-link a:hover {
+    text-decoration: underline;
+  }
+
+  /* ================= FOOTER ================= */
+  footer {
+    text-align: center;
+    padding: 30px 20px 40px;
+    font-size: 14px;
+    color: var(--muted);
+    background: #f1ede4;
+  }
+</style>
 </head>
+
+
 <body>
 
-  <div class="sidebar">
-    <img class="avatar" src="images/COGS_250410_TN_157 2.jpg" alt="Ankila avatar">
-    <div class="subtitle">MGIS • GIS • Web Mapping</div>
-    <h1>Ankila Kumari</h1>
+<!-- ================= NAVIGATION ================= -->
+<header>
+  <div class="nav-container">
+    <a href="#home" class="logo">Ankila Kumari</a>
+
     <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#resume">Resume</a>
-      <a href="#career">Career & Professional Development Plan</a>
-      <a href="#My CliftonStrengths® ">My CliftonStrengths® </a>
-      <a href="#certificates/Achievements">Certificates/Achievements</a>
-      <a href="#contact">Contact</a>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">GIS Work</a></li>
+        <li><a href="#career">Career</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="Ankila_Resume.pdf" target="_blank">Resume</a></li>
+      </ul>
     </nav>
   </div>
+</header>
 
-  <div class="content">
-    <section id="home" data-color="#2b6cb0">
-      <div class="home-bg" aria-hidden="true"></div>
-      <div class="inner">
-        <div class="hero" role="banner">
-          <h1>Welcome to my Portfolio</h1>
-          <div class="typewriter" id="typewriter" tabindex="0" title="Click to jump to projects"></div>
-          <div class="subtitle">MGIS • GIS • Web Mapping</div>
-        </div>
-        <!-- keep original intro for accessibility (hidden visually on hero) -->
-        <div class="sr-only" style="display:none;">
-          <p>Hi there! Welcome to my portfolio. I’m Ankila Kumari, currently studying MGIS at the University of Minnesota. I’m also pursuing my minor in Computer Science.</p>
-          <p>My work focuses on GIS, transportation, health data, and web mapping.</p>
-        </div>
-      </div>
-    </section>
 
-  <section id="about" data-color="#6b46c1">
-  <h2>About Me</h2>
-  <img src="images/COGS_250410_TN_157.jpg" alt="Ankila Kumari" style="width:250px;  display:block; margin:auto;">
-  
-
-<p>Hi, I’m Ankila Kumari. I’m from Bihar, India, and my journey into the world of GIS started after completing my undergraduate degree in Automobile Engineering. I worked as an Associate GIS Specialist at Cyient Pvt. Ltd., where I was part of projects involving satellite imagery, linear reference image (LRI), and spatial data analysis.</p>
-
-<p>Now, I’m pursuing a Master’s degree in Geographic Information Science (MGIS) with a minor in Computer Science at the University of Minnesota. I also work as a Graduate Assistant at U-Spatial, where I support research using GIS.</p>
-
-<hr>
-
-<h3>Bridging Remote Sensing, GIS, and Real-World Impact</h3>
-
-<p>I’m passionate about using GIS to solve real-world problems especially in transportation and healthcare. I enjoy working with satellite imagery, remote sensing, and tools like Google Earth Engine (GEE) to understand patterns and make data more meaningful.</p>
-
-<p><strong>My skills include:</strong></p>
-<ul>
-  <li>Satellite imagery analysis & remote sensing</li>
-  <li>linear reference image (LRI)</li>
-  <li>Google Earth Engine (GEE) for scalable, cloud-based geospatial analysis</li>
-  <li>Developing interactive dashboards and web maps</li>
-  <li>Writing code in Python, JavaScript (GEE), and working with APIs</li>
-</ul>
-
-<p>What I love most about GIS is its ability to turn complex data into visual stories that help people make better decisions. Whether it’s mapping accessibility to healthcare or improving mobility systems, I enjoy building solutions that make a difference.</p>
-
-<p>Outside of work and school, I love to travel, explore new cultures, try different foods, and find creative ways to use technology in everyday life.</p>
-
+<!-- ================= HERO ================= -->
+<section id="home">
+  <div class="hero-content">
+    <h1 class="hero-name"><span id="typed-title"></span></h1>
+    <p class="hero-tag"><span id="typed-subtitle"></span></p>
+  </div>
 </section>
 
 
-  <section id="skills" data-color="#38a169">
-      <h2>Skills</h2>
-      <ul>
-        <li>ArcGIS Online, ArcGIS Pro</li>
-        <li>Google Earth Engine</li>
-        <li>Python, Java, SQL, HTML, JS</li>
-        <li>Spatial Analysis & Visualization</li>
-        <li>Web Mapping & Dashboards</li>
-      </ul>
-    </section>
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="section-inner">
+    <h2 class="section-title" style="color:#ffffff;">About Me</h2>
 
-  <section id="projects" data-color="#dd6b20">
-      <h2>Projects</h2>
-      <div class="projects">
-        <div class="card">
-          <h3>Emergency Response Route Planning</h3>
-          <p>Interactive web map for optimizing emergency routes using real-time data.</p>
+    <div class="about-grid">
+      <img src="/Users/anbh/Desktop/My-Portfolio/node_modules/src/COGS_250410_TN_157 2.jpg" class="about-photo" alt="Profile photo of Ankila Kumari">
+
+      <div>
+        <p>Hi, I’m Ankila Kumari, an MGIS student with a minor in Computer Science and a Graduate Assistant at U-Spatial </p>
+
+        <p>Before UMN, I worked at Cyient Pvt. Ltd. as an Associate GIS Specialist on satellite imagery and LRI projects.</p>
+
+        <p>I’m passionate about using GIS for transportation and healthcare research. I enjoy working with remote sensing, GEE, and building meaningful geospatial tools that support real-world decision-making.</p>
+
+        <p>Outside GIS, I enjoy traveling, exploring new cultures, and trying new cuisines.</p>
+
+        <h3>Skills</h3>
+        <div class="skills-list">
+          <span>ArcGIS Pro</span><span>ArcOnline</span><span>Remote Sensing</span>
+          <span>Google Earth Engine</span><span>Python</span> <span>Satellite imagery analysis</span>
+          <span>JavaScript</span><span>Web Mapping</span>
+          <span>Data Visualization</span>
         </div>
-        <div class="card">
-          <h3>NYC Traffic Accident Analysis</h3>
-          <p>Analyzed 3,000+ accident records to identify high-risk zones.</p>
-        </div>
-        <div class="card">
-          <h3>Simulating Green Spaces in Minnesota</h3>
-          <p>Simulation tool for urban green space planning.</p>
-        </div>
-        <div class="card">
-          <h3>3D Solar System Model</h3>
-          <p>Interactive 3D visualization of planetary motion.</p>
+
+        <h3 style="margin-top:20px;">Why You Should Hire Me</h3>
+        <p>I am a fast learner, detail-oriented, and strong at problem solving. I communicate clearly, collaborate well in teams, and take initiative, skills that help projects move smoothly even under pressure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= GIS WORK ================= -->
+<section id="work">
+  <div class="section-inner">
+    <h2 class="section-title">GIS Work</h2>
+
+    <div class="project-grid">
+
+      <div class="project-card">
+        <img src="/Users/anbh/Desktop/My-Portfolio/node_modules/src/emergency.png" alt="Emergency">
+        <h4>Emergency Response Route Planning</h4>
+        <p class="small">A routing tool to improve response time for emergency vehicles.</p>
+      </div>
+
+      <div class="project-card">
+        <img src="/Users/anbh/Desktop/My-Portfolio/node_modules/src/Trafficanalysis.png" alt="NYC">
+        <h4>NYC Accident Analysis</h4>
+        <p class="small">Hotspot analysis to find high-risk areas for crashes.</p>
+      </div>
+
+      <div class="project-card">
+        <img src="/Users/anbh/Desktop/My-Portfolio/node_modules/src/Precipitation analysis .png" alt="Precipitation">
+        <h4>Precipitation Analysis in Brazil</h4>
+        <p class="small">Analysing the precipitation in Brazil for agriculture.</p>
+      </div>
+
+      <div class="project-card">
+        <img src="/Users/anbh/Desktop/My-Portfolio/node_modules/src/basic spatial.png" alt="Minnesota">
+        <h4>Spatial Analysis of Minnesota Block Groups</h4>
+        <p class="small">Spatial clustering and regression to understand water-area patterns.</p>
+      </div>
+
+      <div class="project-card">
+        <img src="/Users/anbh/Desktop/My-Portfolio/node_modules/src/3D solar.png" alt="Solar">
+        <h4>3D Solar System</h4>
+        <p class="small">Interactive 3D model for teaching basic astronomy concepts.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= CAREER & PROFESSIONAL DEVELOPMENT ================= -->
+<section id="career">
+  <div class="section-inner career-section">
+    <h2 class="section-title">Career & Professional Development Plan</h2>
+
+    <p>
+      My career goals focus on applying GIS in transportation, public health, and web mapping.
+      I aim to strengthen my technical skills and continue building real-world project experience.
+    </p>
+
+    <p><strong>Short-Term Goals</strong></p>
+    <p>
+      • Improve my coding and web mapping skills (Python, JavaScript, APIs).<br>
+      • Build experience with transportation tools like Network Analyst.<br>
+      • Publish StoryMaps and create organized project workflows.
+    </p>
+
+    <p><strong>Long-Term Goals</strong></p>
+    <p>
+      • Work in a transportation or public health–focused GIS role.<br>
+      • Develop web-based GIS tools that support planning and decision-making.<br>
+      • Contribute to GIS community research and mentorship.
+    </p>
+
+    <p><strong>Professional Development Highlights</strong></p>
+    <p>
+      • Graduate Assistant at U-Spatial — contributed to an Esri Press book project.<br>
+      • Esri User Conference Student Assistant (2025).<br>
+      • Attended MN GIS/LIS Conference — participated in the App Competition.<br>
+      • Attended ACM SIGSPATIAL 2025 — moderated Lightning Talks, judged posters, and helped design the Treasure Hunt.
+    </p>
+  </div>
+</section>
+
+
+<!-- ================= CONTACT / CONNECT WITH ME ================= -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <h2 class="contact-title">Connect with Me</h2>
+
+    <div class="contact-grid">
+
+      <!-- EMAIL CARD -->
+      <div class="contact-card">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-heading">EMAIL</div>
+        <div class="contact-link">
+          <a href="mailto:kuma0389@umn.edu">kuma0389@umn.edu</a>
         </div>
       </div>
-    </section>
 
+      <!-- LINKEDIN CARD -->
+      <div class="contact-card">
+        <div class="contact-icon">in</div>
+        <div class="contact-heading">LINKEDIN</div>
+        <div class="contact-link">
+          <a href="https://www.linkedin.com/in/ankila-kumari-aba90221b/" target="_blank">
+            @ankila-kumari
+          </a>
+        </div>
+      </div>
 
+      <!-- GITHUB CARD -->
+      <div class="contact-card">
+        <div class="contact-icon">🐙</div>
+        <div class="contact-heading">GITHUB</div>
+        <div class="contact-link">
+          <a href="https://github.com/ankilakumari" target="_blank">
+            github.com/ankilakumari
+          </a>
+        </div>
+      </div>
 
-  <section id="resume" data-color="#4a5568">
-      <h2>Resume</h2>
-      <p>Download my resume <a href="Ankila's%20Resume.pdf" target="_blank">here</a>.</p>
-
-    </section>
-
-
-
-<section id="career" data-color="#805ad5">
-  <h2>Career & Professional Development Plan</h2>
-  <p>My short- and long-term goals focus on applying GIS in transportation, health, and web mapping.</p>
-
-  <h3>Short-Term Goals</h3>
-  <ul>
-    <li>Improve my coding and web mapping skills using JavaScript and Python.</li>
-    <li>Attend GIS and transportation conferences like the <strong>Esri User Conference</strong>.</li>
-    <li>Publish more StoryMaps and participate in GIS competitions.</li>
-  </ul>
-
-  <h3>Long-Term Goals</h3>
-  <ul>
-    <li>Work in a professional GIS environment focusing on public health and transportation planning.</li>
-    <li>Develop web-based GIS tools for real-world decision making.</li>
-    <li>Continue contributing to the GIS community through mentorship and research.</li>
-  </ul>
+    </div>
+  </div>
 </section>
-<section id="My CliftonStrengths®" data-color="#d69e2e">
-      <h2>My CliftonStrengths® </h2>
-      <ul>
-        <li>Achiever</li>
-        <li>Learner</li>
-        <li>Responsibility</li>
-        <li>Relator</li>
-        <li>Input</li>
-      </ul>
-    </section>
-    
-  <section id="certificates/Achievements" data-color="#805ad5">
-      <h2>Certificates/Achievements</h2>
-      <ul>
-        <li>Esri User Conference Student Assistant – 2025</li>
-        <li>Employee of the Month – Cyient Pvt. Ltd.</li>
-        <li>Star Performer of the Month – Cyient Pvt. Ltd.</li>
-        <li>Volunteered in <strong>GISSO career fair</strong> at the University of Minnesota.</li>
-        <li>Supported <strong>U-Spatial research projects</strong> as a Graduate Assistant, helping with Writing a book for ESRI publication.</li>
-        <li>Assisted classmates with data visualization and geospatial tools.</li>
-        <li>Mentored 30 new employee </li>
-      </ul>
-    </section>
 
-  <section id="contact" data-color="#2c7a7b">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:kuma0389@umn.edu">kuma0389@umn.edu</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/ankila-kumari-aba90221b/" target="_blank">linkedin.com/in/ankila-kumari</a></p>
-      <p>GitHub: <a href="https://github.com/ankilakumari" target="_blank">github.com/ankilakumari</a></p>
-    </section>
 
-    <footer>
-      <p>&copy; 2025 Ankila Kumari | Built with GitHub Pages</p>
-    </footer>
-  </div>
-  </div>
+<footer>© 2025 Ankila Kumari • Built with GitHub Pages</footer>
 
-  <script>
-    // Scroll-driven sidebar color + active link highlight
-    (function(){
-      const sidebar = document.querySelector('.sidebar');
-      const navLinks = Array.from(document.querySelectorAll('.sidebar nav a'));
-      const sections = Array.from(document.querySelectorAll('section'));
+<!-- ============== TYPING ANIMATION SCRIPT ============== -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-      // Map id -> link
-      const linkById = {};
-      navLinks.forEach(link => {
-        const id = link.getAttribute('href').replace('#','');
-        linkById[id] = link;
-        // click -> smooth scroll handled by CSS, ensure focus
-        link.addEventListener('click', () => {
-          navLinks.forEach(l => l.classList.remove('active'));
-          link.classList.add('active');
-        });
-      });
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            const color = entry.target.dataset.color || '#111';
-            // update sidebar bg color
-            sidebar.style.background = color;
-            // update link active state
-            navLinks.forEach(l => l.classList.remove('active'));
-            const active = linkById[id];
-            if (active) active.classList.add('active');
-          }
-        });
-      }, { root: null, rootMargin: '0px', threshold: 0.55 });
-
-      sections.forEach(s => io.observe(s));
-    })();
-  </script>
-
-  <script>
-    // Typewriter text and click-to-scroll
-    (function(){
-      const lines = [
-        'My work focuses on GIS, transportation, health data, and web mapping.'
-      ];
-      const el = document.getElementById('typewriter');
-      if (!el) return;
-      let lineIndex = 0, charIndex = 0;
-
-      function type() {
-        const text = lines[lineIndex];
-        if (charIndex <= text.length) {
-          el.textContent = text.slice(0, charIndex);
-          charIndex++;
-          setTimeout(type, 40);
-        } else {
-          // after typing, remove cursor and show subtitle
-          el.style.borderRight = 'none';
-          const subtitle = document.querySelector('.hero .subtitle');
-          if (subtitle) subtitle.classList.add('pop');
-        }
+  function typeText(element, text, speed, callback) {
+    if (!element) return;
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(typing, speed);
+      } else if (callback) {
+        callback();
       }
-      // start typing after short delay
-      setTimeout(type, 600);
+    }
+    typing();
+  }
 
-      function goToProjects() {
-        const target = document.getElementById('projects');
-        if (target) target.scrollIntoView({behavior:'smooth'});
-        const subtitle = document.querySelector('.hero .subtitle');
-        if (subtitle) subtitle.classList.add('pop');
-      }
-      el.addEventListener('click', goToProjects);
-      el.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goToProjects(); } });
-    })();
-  </script>
+  const title = "Welcome to My Portfolio";
+  const subtitle = "MGIS • GA - U-Spatial";
+
+  const titleElement = document.getElementById("typed-title");
+  const subtitleElement = document.getElementById("typed-subtitle");
+
+  typeText(titleElement, title, 70, () => {
+    setTimeout(() => {
+      typeText(subtitleElement, subtitle, 50);
+    }, 300);
+  });
+
+});
+</script>
 
 </body>
 </html>
